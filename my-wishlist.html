@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Мой книжный вишлист | День рождения</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Оставляем только Montserrat — чёткий, разборчивый шрифт без засечек -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald: #2d6a4f;
+            --emerald-light: #40916c;
+            --emerald-glow: #52b788;
+            --orange: #e76f51;
+            --orange-warm: #f4a261;
+            --orange-light: #fae1dd;
+            --bg-dark: #1a1a1a;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --text: #f0f0f0;
+            --text-muted: #b0b0b0;
+            --gold: #e9c46a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Теперь весь текст по умолчанию — Montserrat */
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(ellipse at 30% 20%, #2d2d2d 0%, #0d0d0d 70%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text);
+            position: relative;
+            overflow-x: hidden;
+            font-weight: 400; /* обычная толщина для основного текста */
+            line-height: 1.5;
+        }
+
+        /* Фоновый геометрический паттерн с лисьими следами */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 15% 25%, rgba(231, 111, 81, 0.12) 3px, transparent 3px),
+                radial-gradient(circle at 22% 27%, rgba(231, 111, 81, 0.08) 2px, transparent 2px),
+                radial-gradient(circle at 18% 30%, rgba(231, 111, 81, 0.1) 1.5px, transparent 1.5px),
+                radial-gradient(circle at 75% 15%, rgba(64, 145, 108, 0.1) 4px, transparent 4px),
+                radial-gradient(circle at 82% 18%, rgba(64, 145, 108, 0.06) 2.5px, transparent 2.5px),
+                radial-gradient(circle at 78% 12%, rgba(64, 145, 108, 0.08) 2px, transparent 2px),
+                radial-gradient(circle at 40% 60%, rgba(231, 111, 81, 0.07) 3.5px, transparent 3.5px),
+                radial-gradient(circle at 85% 70%, rgba(64, 145, 108, 0.1) 3px, transparent 3px),
+                radial-gradient(circle at 10% 80%, rgba(231, 111, 81, 0.09) 2.5px, transparent 2.5px),
+                radial-gradient(circle at 50% 85%, rgba(64, 145, 108, 0.07) 4px, transparent 4px);
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 0;
+            animation: bgShift 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes bgShift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 50px 50px; }
+        }
+
+        .bg-foxes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.13;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Шапка в лесном стиле */
+        .header {
+            background: linear-gradient(160deg, rgba(45, 106, 79, 0.7) 0%, rgba(26, 26, 26, 0.9) 50%, rgba(231, 111, 81, 0.5) 100%);
+            border: 1px solid rgba(82, 183, 136, 0.3);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(from 0deg, transparent, rgba(82, 183, 136, 0.15), transparent, rgba(231, 111, 81, 0.15), transparent);
+            animation: rotateGlow 12s infinite linear;
+            z-index: 0;
+        }
+
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .fox-header-svg {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 0 15px rgba(244, 162, 97, 0.6));
+            animation: foxFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes foxFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        /* Заголовок — теперь Montserrat, крупный, полужирный, разборчивый */
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            /* Градиент остаётся, но буквы чёткие */
+            background: linear-gradient(135deg, var(--orange-warm), var(--emerald-glow), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            color: var(--text-muted);
+            font-weight: 500; /* чуть толще, чтобы не теряться */
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header .glow-line {
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--orange-warm), var(--emerald-glow), transparent);
+            margin: 15px auto;
+            opacity: 0.7;
+        }
+
+        /* Сетка списка */
+        .wishlist-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .book-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .book-card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--orange), var(--emerald-glow));
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+        }
+
+        .book-card:hover {
+            background: rgba(30, 30, 30, 0.95);
+            border-color: rgba(82, 183, 136, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 20px rgba(231, 111, 81, 0.2);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .book-card:hover::after {
+            transform: scaleY(1);
+        }
+
+        .book-card .number {
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(231, 111, 81, 0.3), rgba(64, 145, 108, 0.3));
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3em;
+            color: var(--gold);
+            flex-shrink: 0;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .book-card:hover .number {
+            background: linear-gradient(135deg, rgba(231, 111, 81, 0.6), rgba(64, 145, 108, 0.6));
+            box-shadow: 0 0 15px rgba(233, 196, 106, 0.5);
+        }
+
+        .book-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        /* Самое важное — названия книг теперь чёткие и крупные */
+        .book-title {
+            font-size: 1.3em;           /* увеличено с 1.2em */
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 5px;
+            line-height: 1.4;
+            letter-spacing: 0.3px;      /* лёгкий межбуквенный интервал для ясности */
+            transition: color 0.3s;
+        }
+
+        .book-card:hover .book-title {
+            color: var(--orange-warm);
+        }
+
+        .book-publisher {
+            font-size: 0.82em;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .book-link {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 0.85em;
+            color: var(--emerald-glow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 1px dotted transparent;
+        }
+
+        .book-link:hover {
+            color: var(--orange-warm);
+            border-bottom-color: var(--orange-warm);
+        }
+
+        .fox-icon {
+            flex-shrink: 0;
+            width: 45px;
+            height: 45px;
+            opacity: 0.6;
+            transition: all 0.4s ease;
+        }
+
+        .book-card:hover .fox-icon {
+            opacity: 1;
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 10px rgba(244, 162, 97, 0.7));
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer p {
+            font-size: 1.3em;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .footer .heart {
+            display: inline-block;
+            animation: heartBeat 1.5s infinite;
+            color: var(--orange);
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.25); }
+            50% { transform: scale(1); }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2.2em; }
+            .book-card { padding: 14px 15px; gap: 12px; }
+            .book-card .number { width: 35px; height: 35px; font-size: 1em; }
+            .fox-icon { width: 35px; height: 35px; }
+            .book-title { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Фоновые лисы (силуэты) -->
+    <svg class="bg-foxes" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+        <defs>
+            <path id="foxSilhouette" d="M60,40 Q70,20 90,30 Q100,40 95,55 Q90,70 80,75 L85,95 L65,90 L60,75 Q45,70 40,55 Q35,40 45,30 Q55,20 60,40 Z" />
+        </defs>
+        <use href="#foxSilhouette" x="100" y="150" fill="#e76f51" opacity="0.3" transform="scale(1.5)" />
+        <use href="#foxSilhouette" x="900" y="600" fill="#40916c" opacity="0.2" transform="scale(2) rotate(-15)" />
+        <use href="#foxSilhouette" x="1100" y="100" fill="#e76f51" opacity="0.25" transform="scale(1.8) rotate(10)" />
+        <use href="#foxSilhouette" x="200" y="700" fill="#40916c" opacity="0.2" transform="scale(1.3) rotate(-25)" />
+    </svg>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <!-- Лиса в шапке -->
+                <svg class="fox-header-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="foxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f4a261;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#e76f51;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <polygon points="30,20 25,0 45,15" fill="url(#foxGrad)"/>
+                    <polygon points="70,20 75,0 55,15" fill="url(#foxGrad)"/>
+                    <ellipse cx="50" cy="40" rx="28" ry="22" fill="url(#foxGrad)"/>
+                    <ellipse cx="35" cy="48" rx="10" ry="8" fill="#fae1dd" opacity="0.9"/>
+                    <ellipse cx="65" cy="48" rx="10" ry="8" fill="#fae1dd" opacity="0.9"/>
+                    <ellipse cx="50" cy="52" rx="8" ry="6" fill="#fae1dd" opacity="0.9"/>
+                    <polygon points="48,49 52,49 50,53" fill="#1a1a1a"/>
+                    <ellipse cx="37" cy="40" rx="3" ry="4" fill="#1a1a1a"/>
+                    <ellipse cx="63" cy="40" rx="3" ry="4" fill="#1a1a1a"/>
+                    <circle cx="36" cy="38" r="1.5" fill="white"/>
+                    <circle cx="62" cy="38" r="1.5" fill="white"/>
+                </svg>
+                <h1>Мой Книжный Вишлист</h1>
+                <p class="subtitle">🎂 Ко дню рождения 🎂</p>
+                <div class="glow-line"></div>
+                <p style="color: #b0b0b0; font-size: 0.9em; margin-top: 8px;">Пусть лесные лисы принесут волшебные книги</p>
+            </div>
+        </div>
+
+        <div class="wishlist-grid">
+            <!-- Все 26 карточек книг (ссылки и названия как раньше) -->
+            <div class="book-card"><div class="number">1</div><div class="book-info"><div class="book-title">Альпакалипсис придет, Лама всех спасет</div><div class="book-publisher">Эксмо</div><a class="book-link" href="https://www.wildberries.ru/catalog/83952823/detail.aspx?size=137589821&targetUrl=MI%7C3%7CMCS%7CIT%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">2</div><div class="book-info"><div class="book-title">Любовь и вереск</div><div class="book-publisher">CLEVER</div><a class="book-link" href="https://www.wildberries.ru/catalog/701597224/detail.aspx?size=975429793&targetUrl=GP%7C224%7CISC%7CIT%7Cpriceup%7C817161305%7C%7C%7C%7C%7C%7C%7C%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F%3B%D0%96%D0%B0%D0%BD%D1%80%D1%8B%2F%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">3</div><div class="book-info"><div class="book-title">Невинная любовь</div><div class="book-publisher">CLEVER</div><a class="book-link" href="https://www.wildberries.ru/catalog/494985442/detail.aspx?size=688523977&targetUrl=MI%7C8%7CICA%7CIT%7C%7C143416700%7C1%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">4</div><div class="book-info"><div class="book-title">Йокларга теләмәгән бурсык малае</div><div class="book-publisher">Татарское книжное издательство</div><a class="book-link" href="https://www.wildberries.ru/catalog/770963389/detail.aspx?size=1128877708&targetUrl=MI%7C6%7CICS%7CIT%7C%7C113371471%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">5</div><div class="book-info"><div class="book-title">Вишневый сад</div><div class="book-publisher">ПРОСПЕКТ</div><a class="book-link" href="https://www.wildberries.ru/catalog/39045820/detail.aspx?size=79407826&targetUrl=MS%7C0%7CANS%7CIT%7Cpopular%7C%D0%A7%D0%B5%D1%85%D0%BE%D0%B2+%D0%B2%D0%B8%D1%88%D0%BD%D1%91%D0%B2%D1%8B%D0%B9%7C%7C%7C%D1%87%D0%B5%D1%85%D0%BE%D0%B2+%D0%B2%D0%B8%D1%88%D0%BD%D0%B5%D0%B2%D1%8B%D0%B9+%D1%81%D0%B0%D0%B4%7Cold%7Cqid1332613202306732598020260315212326%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">6</div><div class="book-info"><div class="book-title">Кто подставил темного властелина?</div><div class="book-publisher">Эксмо</div><a class="book-link" href="https://www.wildberries.ru/catalog/259491485/detail.aspx?size=403507132&targetUrl=MI%7C4%7CICS%7CCR%7C%7C220050625%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">7</div><div class="book-info"><div class="book-title">Кто подставил кролика Роджера</div><div class="book-publisher">Феникс</div><a class="book-link" href="https://www.wildberries.ru/catalog/206860789/detail.aspx?size=332077895&targetUrl=BP%7C61%7CIBB%7CIT%7Cpriceup%7C46255455%7C%7C%7C%7C%7C%7C%7C%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F%3B%D0%96%D0%B0%D0%BD%D1%80%D1%8B%2F%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%7CMain+Block%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">8</div><div class="book-info"><div class="book-title">Меня зовут Персефона</div><div class="book-publisher">Эксмо</div><a class="book-link" href="https://www.wildberries.ru/catalog/444456696/detail.aspx?size=628677119&targetUrl=%7C19%7CICS%7CIT%7C%7C177019531%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">9</div><div class="book-info"><div class="book-title">Хозяйка Дьявола</div><div class="book-publisher">CLEVER</div><a class="book-link" href="https://www.wildberries.ru/catalog/425115750/detail.aspx?size=606107770&targetUrl=MI%7C0%7CICS%7CCR%7C%7C701597293%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">10</div><div class="book-info"><div class="book-title">Господин прокурор</div><div class="book-publisher">CLEVER</div><a class="book-link" href="https://www.wildberries.ru/catalog/701597293/detail.aspx?size=975429867&targetUrl=MI%7C7%7CMCS%7CIT%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">11</div><div class="book-info"><div class="book-title">Иван Царевич и серый морг</div><div class="book-publisher">ОКно</div><a class="book-link" href="https://www.wildberries.ru/catalog/307685111/detail.aspx?size=466433533&targetUrl=BP%7C47%7CIBB%7CIT%7Cpriceup%7C458100443%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">12</div><div class="book-info"><div class="book-title">Елена Прекрасная и город на крови</div><div class="book-publisher">ОКно</div><a class="book-link" href="https://www.wildberries.ru/catalog/723026449/detail.aspx?size=1018862573&targetUrl=BP%7C47%7CIBB%7CIT%7Cpriceup%7C458100443%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">13</div><div class="book-info"><div class="book-title">Чернильные души</div><div class="book-publisher">Эксмо</div><a class="book-link" href="https://www.wildberries.ru/catalog/399565246/detail.aspx?size=576985882&targetUrl=MI%7C13%7CICS%7CIT%7C%7C269373581%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">14</div><div class="book-info"><div class="book-title">Дневник Домового</div><div class="book-publisher">АСТ</div><a class="book-link" href="https://www.wildberries.ru/catalog/340428342/detail.aspx?size=507026342&targetUrl=MI%7C5%7CICS%7CIT%7C%7C650030182%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">15</div><div class="book-info"><div class="book-title">Зов. Удивительное путешествие Кота и Домового</div><div class="book-publisher">АСТ</div><a class="book-link" href="https://www.wildberries.ru/catalog/310808319/detail.aspx?size=470321747&targetUrl=MI%7C5%7CICS%7CIT%7C%7C650030182%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">16</div><div class="book-info"><div class="book-title">Девушка лучшего друга</div><div class="book-publisher">Проф-Пресс</div><a class="book-link" href="https://www.wildberries.ru/catalog/869213788/detail.aspx?size=1309071937&targetUrl=MS%7C6%7CSST%7CIT%7Cpopular%7C%D1%86%D0%B2%D0%B5%D1%82%D0%BD%D0%BE%D0%B9+%D1%81%D1%80%D0%B5%D0%B7+%D0%BA%D0%BD%D0%B8%D0%B3%D0%B8+%7Cpreset%3D600540659%7Cpreset%7C%7C%7Cqid1332613202306732598020260503163735%7C%7C%7C%7CMain" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">17</div><div class="book-info"><div class="book-title">Пятнадцатилетний капитан. Вокруг света за 80 дней</div><div class="book-publisher">СЗКЭО</div><a class="book-link" href="https://www.wildberries.ru/catalog/249770070/detail.aspx?size=390807976&targetUrl=MS%7C10%7CSNT%7CIT%7Cpopular%7C%D0%B6%D1%8E%D0%BB%D1%8C+%D0%B2%D0%B5%D1%80%D0%BD+%D0%B7%D0%B0+80+%D0%B4%D0%BD%D0%B5%D0%B9%7C_st0%3D0LbRjtC70Yw%3D%26_st1%3D0LLQtdGA0L0%3D%26_st2%3DODA%3D%26_st3%3D0LTQtdC90Yw%3D%26contexts%3D2018%2C7%3B5768%2C7%3B3455%2C7%3B3456%2C7%3B2362%2C7%3B397%2C7%3B2951%2C7%3B267%2C7%3B5805%2C7%3B381%2C7%3B3802%2C7%3B5322%2C7%3B4961%2C7%3B3806%2C7%3B3544%2C7%3B8384%2C7%3B6262%2C7%3B338%2C7%3B1312%2C7%3B1976%2C7%7Cmerger%7C%7C%7Cqid1332613202306732598020260421130436%7C%7C%7C%7CMain" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">18</div><div class="book-info"><div class="book-title">Жюль Верн. Трилогия Капитан Немо</div><div class="book-publisher">СЗКЭО</div><a class="book-link" href="https://www.wildberries.ru/catalog/707598701/detail.aspx?size=987516913&targetUrl=MS%7C44%7CSNT%7CIT%7Cpopular%7C%D0%B6%D1%8E%D0%BB%D1%8C+%D0%B2%D0%B5%D1%80%D0%BD+%D0%B2%D1%81%D0%B5+%D0%BA%D0%BD%D0%B8%D0%B3%D0%B8%7Cpreset%3D19021563%7Cpreset%7C%7C%7Cqid1332613202306732598020260421130321%7C%7C%7C%7CMain" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">19</div><div class="book-info"><div class="book-title">Самайнтаун (подарочное издание)</div><div class="book-publisher">Эксмо</div><a class="book-link" href="https://www.wildberries.ru/catalog/544841086/detail.aspx?size=750283862&targetUrl=%7C0%7CICO%7CIT%7Cpopular%7C756359035%7CFullsizeBlock%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">20</div><div class="book-info"><div class="book-title">Ведьмак. Все романы цикла в одном томе</div><div class="book-publisher">АСТ</div><a class="book-link" href="https://www.wildberries.ru/catalog/52447320/detail.aspx?size=98384906&targetUrl=MS%7C1%7CSAB%7CCT%7Cpopular%7C%7C%7C%7C%D0%B2%D0%B5%D0%B4%D1%8C%D0%BC%D0%B0%D0%BA%7Cold%7Cqid1332613202306732598020260121135236%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">21</div><div class="book-info"><div class="book-title">Конан Дойл. Прикл. Шерлока Холмса. Полное собрание</div><div class="book-publisher">СЗКЭО</div><a class="book-link" href="https://www.wildberries.ru/catalog/274072837/detail.aspx?size=422766715&targetUrl=MS%7C3%7CSNT%7CCT%7Cpopular%7C%D0%A8%D0%B5%D1%80%D0%BB%D0%BE%D0%BA%7Cpreset%3D10021060%7Cpreset%7C%7C%7Cqid1332613202306732598020260310155006%7C%7C%7C%7CMain" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">22</div><div class="book-info"><div class="book-title">Мифология Средиземья (с илл. Антейку)</div><div class="book-publisher">Манн, Иванов и Фербер</div><a class="book-link" href="https://www.wildberries.ru/catalog/552800731/detail.aspx?size=760318772&targetUrl=MI%7C6%7CMCS%7CIT%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">23</div><div class="book-info"><div class="book-title">Властелин Колец (вся трилогия) + значок</div><div class="book-publisher">АСТ</div><a class="book-link" href="https://www.wildberries.ru/catalog/175111181/detail.aspx?size=290254662&targetUrl=MI%7C0%7CICS%7CIT%7C%7C434682604%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">24</div><div class="book-info"><div class="book-title">Смешарики. История культовой Вселенной</div><div class="book-publisher">Эксмо</div><a class="book-link" href="https://www.wildberries.ru/catalog/202286859/detail.aspx?size=326281026&targetUrl=GP%7C14%7CISC%7CCT%7Cpopular%7C277721517%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">25</div><div class="book-info"><div class="book-title">Настоящие сказки 1001 ночи</div><div class="book-publisher">Манн, Иванов и Фербер</div><a class="book-link" href="https://www.wildberries.ru/catalog/366662285/detail.aspx?size=537071820&targetUrl=MI%7C124%7CMCS%7CIT%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+            <div class="book-card"><div class="number">26</div><div class="book-info"><div class="book-title">Хозяйка Медной горы (рисунки Антейку)</div><div class="book-publisher">АСТ</div><a class="book-link" href="https://www.wildberries.ru/catalog/575916095/detail.aspx?size=788264923&targetUrl=MI%7C0%7CICS%7CIT%7C%7C575076558%7C%7C%7C%7C%7C%7C%7C%7C%7C" target="_blank">Открыть →</a></div><svg class="fox-icon" viewBox="0 0 40 40"><polygon points="12,8 8,0 18,5" fill="currentColor" opacity="0.7"/><polygon points="28,8 32,0 22,5" fill="currentColor" opacity="0.7"/><ellipse cx="20" cy="18" rx="11" ry="9" fill="currentColor" opacity="0.6"/><ellipse cx="15" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="25" cy="22" rx="4" ry="3" fill="#fae1dd"/><ellipse cx="15" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/><ellipse cx="25" cy="18" rx="1.5" ry="2" fill="#1a1a1a"/></svg></div>
+        </div>
+
+        <div class="footer">
+            <p>Спасибо, что заглянули в мой волшебный лес желаний <span class="heart">🦊</span></p>
+            <p style="font-size: 0.85em; margin-top: 6px; color: #888;">С любовью и предвкушением книжных приключений ✨</p>
+        </div>
+    </div>
+</body>
+</html>
